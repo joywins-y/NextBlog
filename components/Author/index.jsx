@@ -1,7 +1,6 @@
 import { GithubOutlined, QqOutlined, WechatOutlined } from "@ant-design/icons";
 import { Avatar, Divider } from "antd";
 import author from "../../pages/assets/author.jpeg";
-import author1 from "../../public/author.jpeg";
 import styles from "./index.module.scss";
 
 const Author = () => {
@@ -9,7 +8,7 @@ const Author = () => {
     <div className={styles.author_container}>
       <div className="author-div comm-box">
         <div>
-          <Avatar size={100} src={author1} />
+          <Avatar size={100} src={author} />
         </div>
         <div className="author-introduction">
           hhhh
