@@ -1,0 +1,12 @@
+.advert_container {
+  :global {
+    .ad-div {
+      margin-top: 0.5rem;
+    }
+    .ad-div div {
+      margin-bottom: 0.2rem;
+      border-radius: 0.3rem;
+      overflow: hidden;
+    }
+  }
+}

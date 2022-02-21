@@ -1,0 +1,30 @@
+body {
+  background-color: #f6f6f6;
+}
+
+.comm-main {
+  margin-top: 0.5rem;
+}
+
+.comm-left {
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  border-bottom: 1px solid #eee;
+  background-color: #fff;
+}
+
+.comm-right {
+  padding: 0.3rem;
+  margin-left: 0.5rem;
+  border-radius: 0.3rem;
+  border-bottom: 1px solid #eee;
+  background-color: #fff;
+}
+
+.comm-box {
+  padding: 0.3rem;
+  margin-left: 0.5rem;
+  border: 1px solid #eee;
+  border-radius: 0.3rem;
+  background-color: #fff;
+}

@@ -2,11 +2,8 @@ import { Button, Col, Row } from "antd";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Header from "../components/Header";
-import Author from "../components/Author";
-import Advert from "../components/Advert";
-import Footer from "../components/Footer";
 
-const Home = () => {
+const Detailed = () => {
   return (
     <div className={styles.container}>
       <Head>
@@ -22,23 +19,11 @@ const Home = () => {
           左侧
         </Col>
         <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
-          <Author />
-          <Advert />
+          右侧
         </Col>
       </Row>
-
-      {/* <main className={styles.main}>
-        Home
-        <Button type="primary">
-          hello
-        </Button>
-      </main>
-      <footer className={styles.footer}></footer> */}
-      <footer className={styles.footer}>
-        <Footer />
-      </footer>
     </div>
   );
 };
 
-export default Home;
+export default Detailed;
