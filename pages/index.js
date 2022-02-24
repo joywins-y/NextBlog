@@ -17,11 +17,11 @@ const Home = () => {
 
       <Header />
 
-      <Row className="comm-main" type="flex" justify="center">
+      <Row className="comm-main" type="flex" justify="center" gutter={5}>
         <Col className="comm-left" xs={24} sm={24} md={16} lg={18} xl={14}>
           左侧
         </Col>
-        <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
+        <Col className="comm-right" xs={0} sm={0} md={8} lg={6} xl={4}>
           <Author />
           <Advert />
         </Col>
@@ -33,7 +33,7 @@ const Home = () => {
           hello
         </Button>
       </main>
-      <footer className={styles.footer}></footer> */}
+ */}
       <footer className={styles.footer}>
         <Footer />
       </footer>
