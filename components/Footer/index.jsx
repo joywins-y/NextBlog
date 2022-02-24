@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import styles from './index.module.scss';
-import vscode from '../../pages/assets/10001.png';
+import vscode from '/pages/assets/vscode.png';
 
 const Footer = () => {
+  const colors = ["#2C2C31","#FFFFFF","#38C8FE","#1990FF","#FB7299","#FFFFFF","#000000","#40485A","#3160F4", "#FFFFFF"];
+
   return (
     <div className={styles.footer_container}>
       <div className="footer-div">

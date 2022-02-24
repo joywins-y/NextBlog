@@ -34,6 +34,7 @@
             align-items: center;
             transition: all 0.3s;
             height: 80px;
+
             img {
               width: 30px;
               height: 30px;
@@ -58,6 +59,7 @@
                 color: #fff;
                 padding: 24px 20px;
                 transition: all 0.5s;
+                text-align: start;
                 .title {
                   font-weight: bold;
                   font-size: 14px;
@@ -71,6 +73,7 @@
             }
           }
           &:hover {
+            background-color: bisque;
             a {
               .tool-desc {
                 .hide-desc {
