@@ -29,3 +29,13 @@ body {
   border-radius: 0.3rem;
   background-color: #fff;
 }
+
+.list-icon {
+  padding: 0.5rem 0;
+  color: #aaa;
+}
+
+.list-icon span {
+  display: inline-block;
+  padding: 0 10px;
+}

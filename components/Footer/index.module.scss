@@ -84,6 +84,165 @@
             }
           }
         }
+
+        .li-vscode:hover {
+          background-color: #2c2c31;
+        }
+        .li-nextjs:hover {
+          background-color: #ffffff;
+          a .tool-desc .inner {
+            color: #000000;
+          }
+        }
+        .li-ps:hover {
+          background-color: #38c8fe;
+        }
+        .li-antd:hover {
+          background-color: #1990ff;
+        }
+        .li-bilibili:hover {
+          background-color: #fb7299;
+        }
+        .li-cloudmusic:hover {
+          background-color: #ffffff;
+          a .tool-desc .inner {
+            color: #000000;
+          }
+        }
+        .li-github:hover {
+          background-color: #000000;
+        }
+        .li-gitee:hover {
+          background-color: #40485a;
+        }
+        .li-gaod:hover {
+          background-color: #3160f4;
+        }
+        .li-qweather:hover {
+          background-color: #ffffff;
+          a .tool-desc .inner {
+            color: #000000;
+          }
+        }
+      }
+
+      .you {
+        .social-btns {
+          height: 50px;
+          margin: auto;
+          font-size: 0;
+          text-align: center;
+          position: relative;
+          .btn {
+            &.facebook:before {
+              background-color: #3b5998;
+            }
+            &.facebook {
+              .fa {
+                color: #3b5998;
+              }
+              .fa-facebook::before {
+                content: "f";
+              }
+            }
+            &.twitter:before {
+              background-color: #3cf;
+            }
+            &.twitter .fa {
+              color: #3cf;
+            }
+            &.google:before {
+              background-color: #dc4a38;
+            }
+            &.google .fa {
+              color: #dc4a38;
+            }
+            &.dribbble:before {
+              background-color: #f26798;
+            }
+            &.dribbble .fa {
+              color: #f26798;
+            }
+            &.skype:before {
+              background-color: #00aff0;
+            }
+            &.skype .fa {
+              color: #00aff0;
+            }
+          }
+          .btn {
+            display: inline-block;
+            background-color: #fff;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            margin: 0 10px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 28%;
+            box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.1);
+            opacity: 0.99;
+
+            .fa {
+              font-size: 32px;
+              vertical-align: middle;
+              transform: scale(0.8);
+              transition: all 0.35s;
+              transition-timing-function: cubic-bezier(
+                0.31,
+                -0.105,
+                0.43,
+                1.59
+              );
+            }
+          }
+          .btn:before {
+            content: "";
+            width: 120%;
+            height: 120%;
+            position: absolute;
+            transform: rotate(45deg);
+            top: 90%;
+            left: -110%;
+            transition: all 0.35s;
+            transition-timing-function: cubic-bezier(0.31, -0.105, 0.43, 1.59);
+          }
+          .btn:focus {
+            &::before {
+              top: -10%;
+              left: -10%;
+            }
+
+            .fa {
+              color: #fff;
+              transform: scale(1);
+            }
+
+            &.facebook {
+              .fa-facebook::before {
+                content: "f";
+              }
+            }
+          }
+          .btn:hover {
+            &::before {
+              top: -10%;
+              left: -10%;
+            }
+            .fa {
+              color: #fff;
+              transform: scale(1);
+            }
+            &.facebook {
+              .fa-facebook::before {
+                content: "f";
+                position: absolute;
+                transform: scale(1.1);
+              }
+            }
+          }
+        }
       }
     }
   }
