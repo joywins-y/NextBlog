@@ -1,12 +1,22 @@
-import { Button, Col, Row } from "antd";
+import { Button, Col, List, Row } from "antd";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Header from "../components/Header";
 import Author from "../components/Author";
 import Advert from "../components/Advert";
 import Footer from "../components/Footer";
+import axios from "axios";
+import { useState } from "react";
+import {
+  CalendarOutlined,
+  FireOutlined,
+  FolderOpenFilled,
+} from "@ant-design/icons";
+import Link from "next/link";
 
-const Home = () => {
+const Home = (list) => {
+  const [articleList, setArticleList] = useState(list.data);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -19,7 +29,36 @@ const Home = () => {
 
       <Row className="comm-main" type="flex" justify="center" gutter={5}>
         <Col className="comm-left" xs={24} sm={24} md={16} lg={18} xl={14}>
-          左侧
+          <div>
+            <List
+              header={<div>最新日志</div>}
+              itemLayout="vertical"
+              dataSource={articleList}
+              renderItem={(item) => (
+                <List.Item>
+                  <div className="list-title">
+                    <Link href={{ pathname: "/details", query: { id: item.id } }}>
+                      <a>{item.title}</a>
+                    </Link>
+                  </div>
+                  <div className="list-icon">
+                    <span>
+                      <CalendarOutlined />
+                      {item.addTime}
+                    </span>
+                    <span>
+                      <FolderOpenFilled />
+                      {item.typeName}
+                    </span>
+                    <span>
+                      <FireOutlined /> {item.view_count}人
+                    </span>
+                  </div>
+                  <div className="list-context">{item.introduce}</div>
+                </List.Item>
+              )}
+            />
+          </div>
         </Col>
         <Col className="comm-right" xs={0} sm={0} md={8} lg={6} xl={4}>
           <Author />
@@ -39,6 +78,16 @@ const Home = () => {
       </footer>
     </div>
   );
+};
+
+Home.getInitialProps = async () => {
+  const promise = new Promise((resolve) => {
+    axios("http://127.0.0.1:7001/default/getArticleList").then((res) => {
+      console.log("远程获取数据结果:", res.data.data);
+      resolve(res.data);
+    });
+  });
+  return await promise;
 };
 
 export default Home;
