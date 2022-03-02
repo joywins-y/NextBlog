@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Anchor } from "antd";
 import { last } from "lodash";
+import Link from "next/link";
 
 export default class MarkNav extends Component {
   constructor(props) {
@@ -52,11 +53,12 @@ export default class MarkNav extends Component {
 
   renderToc(items) {
     // 递归 render
-    return items.map((item) => (
+    return items.map((item) => {
+      console.log(item);
       <Link key={item.anchor} href={`#${item.anchor}`} title={item.text}>
         {item.children && this.renderToc(item.children)}
       </Link>
-    ));
+    });
   }
 
   render() {

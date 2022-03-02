@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import marked from "marked";
+import { marked } from "marked";
 import hljs from "highlight.js";
 import { Row, Col, Input } from "antd";
 import "highlight.js/styles/monokai-sublime.css";

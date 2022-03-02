@@ -4,17 +4,16 @@ import { Breadcrumb, Col, Row, Affix } from "antd";
 import Head from "next/head";
 import Link from "next/link";
 import Header from "../components/Header";
-import styles from "../styles/details.module.scss";
+import Footer from "../components/Footer";
 import Author from "../components/Author";
 import Advert from "../components/Advert";
-import axios from "axios";
-import marked from 'marked';
-import hljs from "highlight.js";
-import Footer from "../components/Footer";
-import "highlight.js/styles/monokai-sublime.css";
 import MarkNav from "../components/MarkNav";
-// import hljs from 'highlight.js';
-// import 'highlight.js/styles/github.css';
+import styles from "../styles/details.module.scss";
+import axios from "axios";
+import { marked } from 'marked';
+import hljs from "highlight.js";
+import "highlight.js/styles/monokai-sublime.css";
+import servicePath from "../config/apiURL";
 
 const Details = (props) => {
   const marknav = new MarkNav();
@@ -109,7 +108,7 @@ const Details = (props) => {
 Details.getInitialProps = async (context) => {
   const id = context.query.id;
   const promise = new Promise((resolve) => {
-    axios("http://127.0.0.1:7001/default/getArticleById/" + id).then((res) => {
+    axios(servicePath.getArticleById + id).then((res) => {
       resolve(res.data.data[0]);
     });
   });

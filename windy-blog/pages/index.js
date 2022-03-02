@@ -1,21 +1,42 @@
-import { Button, Col, List, Row } from "antd";
+import { useState } from "react";
+import { Col, List, Row } from "antd";
 import Head from "next/head";
+import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import Header from "../components/Header";
 import Author from "../components/Author";
 import Advert from "../components/Advert";
 import Footer from "../components/Footer";
 import axios from "axios";
-import { useState } from "react";
 import {
   CalendarOutlined,
   FireOutlined,
   FolderOpenFilled,
 } from "@ant-design/icons";
-import Link from "next/link";
+import servicePath from "../config/apiURL";
+import { marked } from "marked";
+import hljs from "highlight.js";
+import "highlight.js/styles/monokai-sublime.css";
 
 const Home = (list) => {
   const [articleList, setArticleList] = useState(list.data);
+
+  const renderer = new marked.Renderer();
+  marked.setOptions({
+    renderer: renderer,
+    gfm: true,
+    pedantic: false,
+    sanitize: false,
+    tables: true,
+    breaks: false,
+    smartLists: true,
+    smartypants: false,
+    sanitize: false,
+    xhtml: false,
+    highlight: function (code) {
+      return hljs.highlightAuto(code).value;
+    },
+  });
 
   return (
     <div className={styles.container}>
@@ -37,7 +58,9 @@ const Home = (list) => {
               renderItem={(item) => (
                 <List.Item>
                   <div className="list-title">
-                    <Link href={{ pathname: "/details", query: { id: item.id } }}>
+                    <Link
+                      href={{ pathname: "/details", query: { id: item.id } }}
+                    >
                       <a>{item.title}</a>
                     </Link>
                   </div>
@@ -54,7 +77,10 @@ const Home = (list) => {
                       <FireOutlined /> {item.view_count}人
                     </span>
                   </div>
-                  <div className="list-context">{item.introduce}</div>
+                  <div
+                    className="list-context"
+                    dangerouslySetInnerHTML={{ __html: marked(item.introduce) }}
+                  ></div>
                 </List.Item>
               )}
             />
@@ -82,8 +108,7 @@ const Home = (list) => {
 
 Home.getInitialProps = async () => {
   const promise = new Promise((resolve) => {
-    axios("http://127.0.0.1:7001/default/getArticleList").then((res) => {
-      console.log("远程获取数据结果:", res.data.data);
+    axios(servicePath.getArticleList).then((res) => {
       resolve(res.data);
     });
   });
