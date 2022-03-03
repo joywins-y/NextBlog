@@ -5,6 +5,7 @@ const servicePath = {
   getArticleById: ipURL + "getArticleById/", // 文章详情页内容接口
   getTypeInfo: ipURL + "getTypeInfo", // 类型信息接口
   getListById: ipURL + "getListById/", // 根据类别ID获取文章列表
+  checkLogin: ipURL + 'checkLogin', // 检查用户名密码是否正确
 };
 
 export default servicePath;
