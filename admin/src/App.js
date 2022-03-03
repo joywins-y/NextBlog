@@ -1,11 +1,21 @@
-import './App.css';
-import 'antd/dist/antd.css';
-import Login from './components/Login';
+import React from "react";
+import "./App.css";
+import Router from "./pages/router/index";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AdminIndex from "./components/AdminIndex";
+import Login from "./components/Login";
+import SiderDemo from "./components/SiderDemo";
 
 function App() {
   return (
     <div className="App">
-      <Login />
+      {/* <Router /> */}
+      <BrowserRouter>
+        <Routes>
+          <Route path="login" element={<Login />} />
+          <Route path="index/*" element={<AdminIndex />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
