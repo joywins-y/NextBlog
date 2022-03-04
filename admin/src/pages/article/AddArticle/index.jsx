@@ -33,6 +33,12 @@ const Index = (props) => {
 
   useEffect(() => {
     getTypeInfo();
+    //获得文章ID
+    let tmpId = props.match.params.id;
+    if (tmpId) {
+      setArticleId(tmpId);
+      getArticleById(tmpId);
+    }
   }, []);
 
   const changeContent = (e) => {
@@ -47,7 +53,7 @@ const Index = (props) => {
     setIntroducehtml(html);
   };
 
-  //从中台得到文章类别信息
+  /** 从中台得到文章类别信息 */
   const getTypeInfo = () => {
     axios({
       method: "get",
@@ -55,7 +61,7 @@ const Index = (props) => {
       header: { "Access-Control-Allow-Origin": "*" },
       withCredentials: true,
     }).then((res) => {
-      if (res.data.data == "没有登录") {
+      if (res.data.data === "没有登录") {
         localStorage.removeItem("openId");
         props.history.push("/");
       } else {
@@ -69,6 +75,7 @@ const Index = (props) => {
   };
 
   const saveArticle = () => {
+    markedContent();
     if (!selectedType) {
       message.error("必须选择文章类别");
       return false;
@@ -86,6 +93,65 @@ const Index = (props) => {
       return false;
     }
     message.success("检验通过");
+
+    let dataProps = {};
+    dataProps.type_id = selectedType;
+    dataProps.title = articleTitle;
+    dataProps.article_content = articleContent;
+    dataProps.introduce = introducemd;
+    let dataText = showDate.replace("-", "/");
+    dataProps.addTime = new Date(dataText).getTime() / 1000;
+
+    if (articleId == 0) {
+      console.log("articleId=" + articleId);
+      dataProps.view_count = Math.ceil(Math.random() * 100) + 1000;
+      axios({
+        method: "POST",
+        url: servicePath.addArticle,
+        data: dataProps,
+        withCredentials: true,
+      }).then((res) => {
+        setArticleId(res.data.inserId);
+        if (res.data.isSuccess) {
+          message.success("文章保存成功");
+        } else {
+          message.error("文章保存失败");
+        }
+      });
+    } else {
+      dataProps.id = articleId;
+      axios({
+        method: "post",
+        url: servicePath.updateArticle,
+        header: { "Access-Control-Allow-Origin": "*" },
+        data: dataProps,
+        withCredentials: true,
+      }).then((res) => {
+        if (res.data.isScuccess) {
+          message.success("文章保存成功");
+        } else {
+          message.error("保存失败");
+        }
+      });
+    }
+  };
+
+  const getArticleById = (id) => {
+    axios(servicePath.getArticleById + id, {
+      withCredentials: true,
+      header: { "Access-Control-Allow-Origin": "*" },
+    }).then((res) => {
+      //let articleInfo= res.data.data[0]
+      setArticleTitle(res.data.data[0].title);
+      setArticleContent(res.data.data[0].article_content);
+      let html = marked(res.data.data[0].article_content);
+      setMarkdownContent(html);
+      setIntroducemd(res.data.data[0].introduce);
+      let tmpInt = marked(res.data.data[0].introduce);
+      setIntroducehtml(tmpInt);
+      setShowDate(res.data.data[0].addTime);
+      setSelectType(res.data.data[0].typeId);
+    });
   };
 
   return (
