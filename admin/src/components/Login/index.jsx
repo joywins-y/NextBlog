@@ -42,7 +42,7 @@ const Login = (props) => {
       <Spin tip="Loading..." spinning={isLoading}>
         <ProCard title="Blog System">
           <ProForm form={form} onFinish={handleFinish} submitter={false}>
-            <Form.Item name="username">
+            <Form.Item name="userName">
               <Input
                 id="userName"
                 size="large"

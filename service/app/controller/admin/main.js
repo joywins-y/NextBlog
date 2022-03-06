@@ -12,7 +12,7 @@ class MainController extends Controller {
   async checkLogin() {
     const userName = this.ctx.request.body.userName;
     const password = this.ctx.request.body.password;
-    const sql = "SELECT userName FROM admin_user WHERE userName = '"+userName +
+    const sql = "SELECT userName FROM admin_user WHERE userName = '" + userName +
                   "' AND password = '" + password + "'";
     const res = await this.app.mysql.query(sql);
     if (res.length > 0) {
@@ -27,8 +27,9 @@ class MainController extends Controller {
 
   /** 后台文章分类信息 */
   async getTypeInfo() {
-    const resType = await this.app.mysql.select('type');
-    this.ctx.body = { data: resType };
+    const result = await this.app.mysql.select('type');
+    this.ctx.body = { data: result };
+    this.ctx.body = 'type';
   }
 
   // 添加文章
@@ -40,7 +41,7 @@ class MainController extends Controller {
     const insertId = result.insertId;
 
     this.ctx.body = {
-      isScuccess: insertSuccess, insertId,
+      isSuccess: insertSuccess, insertId,
     };
   }
 
@@ -50,7 +51,7 @@ class MainController extends Controller {
     const result = await this.app.mysql.update('article', tmpArticle);
     const updateSuccess = result.affectedRows === 1;
     console.log(updateSuccess);
-    this.ctx.body = { isScuccess: updateSuccess };
+    this.ctx.body = { isSuccess: updateSuccess };
   }
 
   // 获得文章列表

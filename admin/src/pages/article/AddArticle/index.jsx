@@ -33,8 +33,8 @@ const Index = (props) => {
 
   useEffect(() => {
     getTypeInfo();
-    //获得文章ID
-    let tmpId = props.match.params.id;
+    // 获得文章ID
+    let tmpId = props?.match?.params.id;
     if (tmpId) {
       setArticleId(tmpId);
       getArticleById(tmpId);
@@ -56,7 +56,7 @@ const Index = (props) => {
   /** 从中台得到文章类别信息 */
   const getTypeInfo = () => {
     axios({
-      method: "get",
+      method: "GET",
       url: servicePath.getTypeInfo,
       header: { "Access-Control-Allow-Origin": "*" },
       withCredentials: true,
@@ -75,7 +75,7 @@ const Index = (props) => {
   };
 
   const saveArticle = () => {
-    markedContent();
+    // markedContent(); // 先进行转换
     if (!selectedType) {
       message.error("必须选择文章类别");
       return false;
@@ -92,7 +92,6 @@ const Index = (props) => {
       message.error("发布日期不能为空");
       return false;
     }
-    message.success("检验通过");
 
     let dataProps = {};
     dataProps.type_id = selectedType;
@@ -106,7 +105,7 @@ const Index = (props) => {
       console.log("articleId=" + articleId);
       dataProps.view_count = Math.ceil(Math.random() * 100) + 1000;
       axios({
-        method: "POST",
+        method: "post",
         url: servicePath.addArticle,
         data: dataProps,
         withCredentials: true,
@@ -127,7 +126,7 @@ const Index = (props) => {
         data: dataProps,
         withCredentials: true,
       }).then((res) => {
-        if (res.data.isScuccess) {
+        if (res.data.isSuccess) {
           message.success("文章保存成功");
         } else {
           message.error("保存失败");
