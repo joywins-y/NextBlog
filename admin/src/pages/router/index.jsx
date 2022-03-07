@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "../../App";
 import AdminIndex from "../../components/AdminIndex";
 import Login from "../../components/Login";
-import SiderDemo from '../../components/SiderDemo';
+// import SiderDemo from '../../components/SiderDemo';
 
 const Index = () => {
   return (

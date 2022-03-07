@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
-import Router from "./pages/router/index";
+// import Router from "./pages/router/index";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AdminIndex from "./components/AdminIndex";
 import Login from "./components/Login";
-import SiderDemo from "./components/SiderDemo";
+// import SiderDemo from "./components/SiderDemo";
 
 function App() {
   return (

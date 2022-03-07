@@ -2,8 +2,11 @@
 
 module.exports = app => {
   const { router, controller } = app;
-  const adminauth = app.middleware.adminauth;
 
+  // 初始化
+  const adminauth = app.middleware.adminauth({ headerKey: 'X-Time' }, app);
+
+  // 仅挂载到指定的路由上
   router.get('/admin/index', controller.admin.main.index);
   router.post('/admin/checkLogin', controller.admin.main.checkLogin);
   router.get('/admin/getTypeInfo', adminauth, controller.admin.main.getTypeInfo);

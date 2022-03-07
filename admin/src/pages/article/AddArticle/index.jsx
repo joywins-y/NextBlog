@@ -4,11 +4,14 @@ import styles from "./index.less";
 import { Select, Input, Row, Col, Button, DatePicker, message } from "antd";
 import axios from "axios";
 import servicePath from "../../../config/apiURL";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 const { TextArea } = Input;
 
 const Index = (props) => {
+  const navigate = useNavigate();
+  const openId = localStorage.getItem('openId');
   const [articleId, setArticleId] = useState(0); // 文章的ID，如果是0说明是新增加，如果不是0，说明是修改
   const [articleTitle, setArticleTitle] = useState(""); //文章标题
   const [articleContent, setArticleContent] = useState(""); //markdown的编辑内容
@@ -16,7 +19,7 @@ const Index = (props) => {
   const [introducemd, setIntroducemd] = useState(); //简介的markdown内容
   const [introducehtml, setIntroducehtml] = useState("等待编辑"); //简介的html内容
   const [showDate, setShowDate] = useState(); //发布日期
-  const [updateDate, setUpdateDate] = useState(); //修改日志的日期
+  // const [updateDate, setUpdateDate] = useState(); //修改日志的日期
   const [typeInfo, setTypeInfo] = useState([]); // 文章类别信息
   const [selectedType, setSelectType] = useState(1); //选择的文章类别
 
@@ -34,7 +37,8 @@ const Index = (props) => {
   useEffect(() => {
     getTypeInfo();
     // 获得文章ID
-    let tmpId = props?.match?.params.id;
+    let tmpId = props?.match?.params.id || 0;
+    console.log(props);
     if (tmpId) {
       setArticleId(tmpId);
       getArticleById(tmpId);
@@ -55,15 +59,22 @@ const Index = (props) => {
 
   /** 从中台得到文章类别信息 */
   const getTypeInfo = () => {
+    console.log('getTypeInfo=========');
+    const headers = { "Access-Control-Allow-Origin": "*" }
+    if(openId){
+      headers['authorization'] = openId;
+    }
     axios({
-      method: "GET",
+      method: "get",
       url: servicePath.getTypeInfo,
-      header: { "Access-Control-Allow-Origin": "*" },
+      // header: { "Access-Control-Allow-Origin": "*" },
       withCredentials: true,
+      headers,
     }).then((res) => {
+      console.log(res);
       if (res.data.data === "没有登录") {
         localStorage.removeItem("openId");
-        props.history.push("/");
+        navigate('/login');
       } else {
         setTypeInfo(res.data.data);
       }
@@ -93,7 +104,7 @@ const Index = (props) => {
       return false;
     }
 
-    let dataProps = {};
+    let dataProps = {id: new Date().getTime() / 1000};
     dataProps.type_id = selectedType;
     dataProps.title = articleTitle;
     dataProps.article_content = articleContent;
@@ -101,7 +112,11 @@ const Index = (props) => {
     let dataText = showDate.replace("-", "/");
     dataProps.addTime = new Date(dataText).getTime() / 1000;
 
-    if (articleId == 0) {
+    const headers = { "Access-Control-Allow-Origin": "*" }
+    if(openId){
+      headers['authorization'] = openId;
+    }
+    if (articleId === 0) {
       console.log("articleId=" + articleId);
       dataProps.view_count = Math.ceil(Math.random() * 100) + 1000;
       axios({
@@ -109,6 +124,7 @@ const Index = (props) => {
         url: servicePath.addArticle,
         data: dataProps,
         withCredentials: true,
+        headers,
       }).then((res) => {
         setArticleId(res.data.inserId);
         if (res.data.isSuccess) {
@@ -122,23 +138,27 @@ const Index = (props) => {
       axios({
         method: "post",
         url: servicePath.updateArticle,
-        header: { "Access-Control-Allow-Origin": "*" },
+        headers,
         data: dataProps,
         withCredentials: true,
       }).then((res) => {
         if (res.data.isSuccess) {
-          message.success("文章保存成功");
+          message.success("文章修改成功");
         } else {
-          message.error("保存失败");
+          message.error("修改失败");
         }
       });
     }
   };
 
   const getArticleById = (id) => {
+    const headers = { "Access-Control-Allow-Origin": "*" }
+    if(openId){
+      headers['authorization'] = openId;
+    }
     axios(servicePath.getArticleById + id, {
       withCredentials: true,
-      header: { "Access-Control-Allow-Origin": "*" },
+      headers,
     }).then((res) => {
       //let articleInfo= res.data.data[0]
       setArticleTitle(res.data.data[0].title);

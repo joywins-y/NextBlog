@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Layout, Menu, Breadcrumb, Icon } from "antd";
-import styles from "./index.less";
+import { Layout, Menu, Breadcrumb } from "antd";
+// import styles from "./index.less";
 import {
   DesktopOutlined,
   FileOutlined,
@@ -9,12 +9,12 @@ import {
 } from "@ant-design/icons";
 import { Route, Routes } from "react-router-dom";
 import AddArticle from "../../pages/article/AddArticle";
-import ArticleList from "../../pages/article";
+// import ArticleList from "../../pages/article";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-function AdminIndex(props) {
+const AdminIndex = (props) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const onCollapse = (collapsed) => {

@@ -7,10 +7,12 @@ import { useForm } from "antd/lib/form/Form";
 import styles from "./index.less";
 import axios from 'axios';
 import servicePath from "../../config/apiURL";
+import { useNavigate } from "react-router-dom";
 
 const Login = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const [form] = useForm(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFinish = () => {
     form.validateFields().then(async (values) => {
@@ -22,10 +24,12 @@ const Login = (props) => {
         data: values,
         withCredentials: true,
       }).then((res) => {
+        console.log(res);
         setIsLoading(false);
-        if (res.data.data == "登录成功") {
+        if (res.data.data === "登录成功") {
           localStorage.setItem("openId", res.data.openId);
-          props.history.push("/index");
+          // props.history.push("/index");
+          navigate('/index');
         } else {
           message.error("用户名密码错误");
         }

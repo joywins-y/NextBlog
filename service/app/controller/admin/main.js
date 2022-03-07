@@ -10,15 +10,19 @@ class MainController extends Controller {
 
   /** 判断用户名密码是否正确 */
   async checkLogin() {
+    console.log('Login============');
     const userName = this.ctx.request.body.userName;
     const password = this.ctx.request.body.password;
+    console.log(userName);
+    console.log(password);
     const sql = "SELECT userName FROM admin_user WHERE userName = '" + userName +
                   "' AND password = '" + password + "'";
     const res = await this.app.mysql.query(sql);
+    console.log(res);
     if (res.length > 0) {
       // 登录成功，进行session缓存
       const openId = new Date().getTime();
-      this.ctx.session.openId = { openId };
+      this.ctx.session.openId = openId;
       this.ctx.body = { data: '登录成功', openId };
     } else {
       this.ctx.body = { data: '登录失败' };
@@ -27,9 +31,10 @@ class MainController extends Controller {
 
   /** 后台文章分类信息 */
   async getTypeInfo() {
+    console.log('get=============');
     const result = await this.app.mysql.select('type');
+    console.log(result);
     this.ctx.body = { data: result };
-    this.ctx.body = 'type';
   }
 
   // 添加文章
