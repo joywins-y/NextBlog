@@ -42,6 +42,10 @@ class MainController extends Controller {
     const tmpArticle = this.ctx.request.body;
     // tmpArticle.
     const result = await this.app.mysql.insert('article', tmpArticle);
+    console.log(result);
+    const sql = 'SELECT LAST_INSERT_ID()';
+    const lastInsert = await this.app.mysql.query(sql);
+    console.log(lastInsert);
     const insertSuccess = result.affectedRows === 1;
     const insertId = result.insertId;
 

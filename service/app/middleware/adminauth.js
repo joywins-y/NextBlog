@@ -2,9 +2,8 @@
 
 module.exports = () => {
   return async function adminauth(ctx, next) {
-    console.log('ctx=============');
-    console.log(ctx.request.header.authorization);
-    const openId = ctx.request.header.authorization;
+    // const openId = ctx.request.header.authorization;
+    const openId = ctx.session.openId;
     if (openId) {
       await next();
     } else {

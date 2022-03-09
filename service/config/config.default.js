@@ -17,6 +17,7 @@ module.exports = appInfo => {
 
   // add your middleware config here
   // config.middleware = [ 'adminauth' ];
+  config.middleware = [];
 
   // add your user config here
   const userConfig = {
@@ -62,6 +63,13 @@ module.exports = appInfo => {
   //   credentials: true, // 开启认证
   //   allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
   // };
+
+  config.session = {
+    key: 'openId', // 存储 `Session` 的 `Cookie` 键值对的 key
+    maxAge: 24 * 3600 * 1000, // 1 天
+    httpOnly: true,
+    encrypt: true,
+  };
 
   return {
     ...config,
