@@ -1,0 +1,46 @@
+.login-card-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-image: url("../../assets/bg.png");
+  .login-form {
+    position: absolute;
+    width: 480px;
+    height: 552px;
+    padding: 50px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 1px 0 rgba($color: #000000, $alpha: 0.1);
+
+    .form-logo {
+      div {
+        font-size: 18px;
+        color: #999;
+      }
+      h1 {
+        margin-bottom: 50px;
+      }
+    }
+    .ant-form-item {
+      .ant-input-affix-wrapper {
+        border-radius: 20px;
+      }
+      .ant-btn {
+        border-radius: 40px;
+        height: 50px;
+        span {
+          background: linear-gradient(to right, #fff, #ffbb00);
+          -webkit-background-clip: text;
+          color: transparent;
+          font-weight: 500;
+          font-size: 17px;
+        }
+      }
+    }
+  }
+}

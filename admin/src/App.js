@@ -1,22 +1,19 @@
 import React from "react";
-import "./App.css";
-// import Router from "./pages/router/index";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AdminIndex from "./components/AdminIndex";
+// import AdminIndex from "./components/AdminIndex";
+import AdminLayout from "./components/AdminLayout";
 import Login from "./components/Login";
-// import SiderDemo from "./components/SiderDemo";
+import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      {/* <Router /> */}
-      <BrowserRouter>
-        <Routes>
-          <Route path="login" element={<Login />} />
-          <Route path="index/*" element={<AdminIndex />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="login" element={<Login />} />
+        <Route path="index/*" element={<AdminLayout />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
