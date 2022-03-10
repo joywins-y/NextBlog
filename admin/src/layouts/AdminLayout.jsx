@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Avatar } from "antd";
+import React, { useState } from "react";
+import { Avatar, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import ProLayout, { PageContainer } from "@ant-design/pro-layout";
+import ProLayout from "@ant-design/pro-layout";
 import defaultProps from "./_defaultProps";
-import { useNavigate } from "react-router-dom";
-import { getMenuData } from '@ant-design/pro-layout';
+import { Outlet, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
 
-const Index = (props) => {
+const AdminLayout = (props) => {
   const [settings, setSetting] = useState({});
   const [pathname, setPathname] = useState("/welcome");
   const navigate = useNavigate();
-  useEffect(()=>{
-    console.log(navigate);
-    console.log(props);
-    const { breadcrumb, menuData } = getMenuData(defaultProps);
-    console.log(breadcrumb, menuData);
-  })
+
   return (
     <div
       id="test-pro-layout"
@@ -37,7 +32,18 @@ const Index = (props) => {
         menuFooterRender={(props) => {
           return <div>footer</div>;
         }}
-        onMenuHeaderClick={(e) => console.log(e)}
+        menuHeaderRender={() => (
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            <img src={logo} alt="windy" style={{ width: "70%" }} />
+          </div>
+        )}
+        onMenuHeaderClick={(e) => {
+          message.info("点击了菜单头部");
+          navigate("/welcome");
+        }}
+        // onMenuHeaderClick={() => history.push('/welcome')}
         menuItemRender={(item, dom) => (
           <a
             onClick={() => {
@@ -52,13 +58,21 @@ const Index = (props) => {
             <Avatar shape="square" size="small" icon={<UserOutlined />} />
           </div>
         )}
+        // itemRender: (route, params, routes, paths) => <span>{route.breadcrumbName}</span>,
+        itemRender={(route, params, routes, paths) => (
+          <span>{route.breadcrumbName}</span>
+        )}
+        onPageChange={(location) => {
+          navigate(location);
+          console.log(location);
+        }}
         collapsed={false}
         {...settings}
       >
-        <PageContainer></PageContainer>
+        <Outlet />
       </ProLayout>
     </div>
   );
 };
 
-export default Index;
+export default AdminLayout;

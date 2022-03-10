@@ -28,7 +28,7 @@ const Login = (props) => {
         setIsLoading(false);
         if (res.data.data === "登录成功") {
           sessionStorage.setItem("openId", res.data.openId);
-          navigate("/index");
+          navigate("/welcome");
         } else {
           message.error("用户名密码错误");
         }
