@@ -1,14 +1,17 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AdminLayout from "./layouts/AdminLayout";
-import ArticleList from "./pages/article/index";
-import AddArticle from "./pages/article/AddArticle";
-import Login from "./components/Login";
-import Welcome from './pages/welcom/index'
-import "./App.css";
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import AdminLayout from './layouts/AdminLayout';
+import ArticleList from './pages/article/index';
+import AddArticle from './pages/article/AddArticle';
+import Login from './components/Login';
+import Welcome from './pages/welcom/index';
+import './App.css';
+import { useParams } from 'react-router';
 
 function App(props) {
   console.log(props);
+  const { id } = useParams();
+
   return (
     <>
       <BrowserRouter>
@@ -18,6 +21,7 @@ function App(props) {
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/article/list" element={<ArticleList />} />
             <Route path="/article/add" element={<AddArticle />} />
+            <Route path="/article/update/:id" element={<AddArticle />} />
           </Route>
         </Routes>
       </BrowserRouter>

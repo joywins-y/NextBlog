@@ -63,8 +63,12 @@ const AdminLayout = (props) => {
           <span>{route.breadcrumbName}</span>
         )}
         onPageChange={(location) => {
-          navigate(location);
           console.log(location);
+          const currentLocal = window.location.pathname;
+          console.log(currentLocal);
+          if(currentLocal.indexOf('welcome') === -1){
+            navigate(location);
+          }
         }}
         collapsed={false}
         {...settings}

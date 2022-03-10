@@ -21,19 +21,17 @@ const _defaultProps = {
           {
             path: "/article/list",
             name: "文章列表",
-            icon: <CrownOutlined />,
             component: "../../pages/article/index",
           },
           {
             path: "/article/add",
             name: "新增文章",
-            icon: <CrownOutlined />,
             component: "../../pages/article/AddArticle",
           },
           {
-            path: "/article/update",
+            path: "/article/update/:id",
             name: "修改文章",
-            icon: <CrownOutlined />,
+            hideInMenu: true,
             component: "../../pages/article/AddArticle",
           },
         ],

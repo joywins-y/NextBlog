@@ -1,11 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { marked } from "marked";
-import styles from "./index.less";
-import { Select, Input, Row, Col, Button, DatePicker, message } from "antd";
-import axios from "axios";
-import servicePath from "../../../config/apiURL";
-import { useNavigate } from "react-router-dom";
-import { PageContainer } from "@ant-design/pro-layout";
+import React, { useState, useEffect } from 'react';
+import { marked } from 'marked';
+import styles from './index.less';
+import {
+  Select,
+  Input,
+  Row,
+  Col,
+  Button,
+  DatePicker,
+  message,
+  Form,
+} from 'antd';
+import axios from 'axios';
+import servicePath from '../../../config/apiURL';
+import { useNavigate } from 'react-router-dom';
+import { PageContainer } from '@ant-design/pro-layout';
+import ProForm from '@ant-design/pro-form';
+import ProCard from '@ant-design/pro-card';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -14,11 +25,11 @@ const Index = (props) => {
   const navigate = useNavigate();
   // const openId = localStorage.getItem('openId');
   const [articleId, setArticleId] = useState(0); // 文章的ID，如果是0说明是新增加，如果不是0，说明是修改
-  const [articleTitle, setArticleTitle] = useState(""); //文章标题
-  const [articleContent, setArticleContent] = useState(""); //markdown的编辑内容
-  const [markdownContent, setMarkdownContent] = useState("预览内容"); //html内容
+  const [articleTitle, setArticleTitle] = useState(''); //文章标题
+  const [articleContent, setArticleContent] = useState(''); //markdown的编辑内容
+  const [markdownContent, setMarkdownContent] = useState('预览内容'); //html内容
   const [introducemd, setIntroducemd] = useState(); //简介的markdown内容
-  const [introducehtml, setIntroducehtml] = useState("等待编辑"); //简介的html内容
+  const [introducehtml, setIntroducehtml] = useState('等待编辑'); //简介的html内容
   const [showDate, setShowDate] = useState(); //发布日期
   // const [updateDate, setUpdateDate] = useState(); //修改日志的日期
   const [typeInfo, setTypeInfo] = useState([]); // 文章类别信息
@@ -60,14 +71,14 @@ const Index = (props) => {
   /** 从中台得到文章类别信息 */
   const getTypeInfo = () => {
     axios({
-      method: "get",
+      method: 'get',
       url: servicePath.getTypeInfo,
-      header: { "Access-Control-Allow-Origin": "*" },
+      header: { 'Access-Control-Allow-Origin': '*' },
       withCredentials: true,
     }).then((res) => {
-      if (res.data.data === "没有登录") {
-        sessionStorage.removeItem("openId");
-        navigate("/login");
+      if (res.data.data === '没有登录') {
+        sessionStorage.removeItem('openId');
+        navigate('/login');
         return;
       } else {
         setTypeInfo(res.data.data);
@@ -82,19 +93,19 @@ const Index = (props) => {
   const saveArticle = () => {
     // markedContent(); // 先进行转换
     if (!selectedType) {
-      message.error("必须选择文章类别");
+      message.error('必须选择文章类别');
       return false;
     } else if (!articleTitle) {
-      message.error("文章名称不能为空");
+      message.error('文章名称不能为空');
       return false;
     } else if (!articleContent) {
-      message.error("文章内容不能为空");
+      message.error('文章内容不能为空');
       return false;
     } else if (!introducemd) {
-      message.error("简介不能为空");
+      message.error('简介不能为空');
       return false;
     } else if (!showDate) {
-      message.error("发布日期不能为空");
+      message.error('发布日期不能为空');
       return false;
     }
 
@@ -103,19 +114,19 @@ const Index = (props) => {
     dataProps.title = articleTitle;
     dataProps.article_content = articleContent;
     dataProps.introduce = introducemd;
-    let dataText = showDate.replace("-", "/");
+    let dataText = showDate.replace('-', '/');
     dataProps.addTime = new Date(dataText).getTime();
 
-    const headers = { "Access-Control-Allow-Origin": "*" };
+    const headers = { 'Access-Control-Allow-Origin': '*' };
     if (articleId === 0) {
       const id = new Date().getTime();
       dataProps.id = id;
       setArticleId(id);
       console.log(id);
-      console.log("articleId=" + articleId);
+      console.log('articleId=' + articleId);
       dataProps.view_count = Math.ceil(Math.random() * 100) + 1000;
       axios({
-        method: "post",
+        method: 'post',
         url: servicePath.addArticle,
         data: dataProps,
         withCredentials: true,
@@ -124,32 +135,32 @@ const Index = (props) => {
         setArticleId(res.data.inserId);
         setArticleId(id);
         if (res.data.isSuccess) {
-          message.success("文章保存成功");
+          message.success('文章保存成功');
         } else {
-          message.error("文章保存失败");
+          message.error('文章保存失败');
         }
       });
     } else {
       console.log(articleId);
       dataProps.id = articleId;
       axios({
-        method: "post",
+        method: 'post',
         url: servicePath.updateArticle,
         headers,
         data: dataProps,
         withCredentials: true,
       }).then((res) => {
         if (res.data.isSuccess) {
-          message.success("文章修改成功");
+          message.success('文章修改成功');
         } else {
-          message.error("修改失败");
+          message.error('修改失败');
         }
       });
     }
   };
 
   const getArticleById = (id) => {
-    const headers = { "Access-Control-Allow-Origin": "*" };
+    const headers = { 'Access-Control-Allow-Origin': '*' };
     // if(openId){
     //   headers['authorization'] = openId;
     // }
@@ -172,8 +183,32 @@ const Index = (props) => {
 
   return (
     <PageContainer>
+      <ProCard>
+        <ProForm>
+          <Row gutter={24}>
+            <Col span={18}>
+              <Form.Item name="articleTitle">
+                <Input placeholder="博客标题" size="large" />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item initialValue={1} name="articleType">
+                <Select>
+                  {typeInfo.map((item, index) => {
+                    return (
+                      <Option value={item.id} key={index}>
+                        {item.typeName}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+        </ProForm>
+      </ProCard>
       <div className={styles.add_article}>
-        <Row gutter={5}>
+        {/* <Row gutter={5}>
           <Col span={18}>
             <Row gutter={10}>
               <Col span={20}>
@@ -190,7 +225,7 @@ const Index = (props) => {
                   size="large"
                   onChange={selectTypeHandle}
                 >
-                  {/* <Option value="Sign Up">视频教程</Option> */}
+                  <Option value="Sign Up">视频教程</Option>
                   {typeInfo.map((item, index) => {
                     return (
                       <Option value={item.id} key={index}>
@@ -244,7 +279,7 @@ const Index = (props) => {
                 <div
                   className="introduce-html"
                   dangerouslySetInnerHTML={{
-                    __html: "文章简介: " + introducehtml,
+                    __html: '文章简介: ' + introducehtml,
                   }}
                 ></div>
               </Col>
@@ -259,7 +294,7 @@ const Index = (props) => {
               </Col>
             </Row>
           </Col>
-        </Row>
+        </Row> */}
       </div>
     </PageContainer>
   );
